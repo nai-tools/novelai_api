@@ -1,0 +1,28 @@
+[package]
+name = "novelai_api"
+version = "0.2.0"
+authors = ["Allstreamer"]
+description = "A Rust based interface for working with the NovelAI API"
+readme = "README.md"
+keywords = ["novelai", "api"]
+categories = ["api-bindings"]
+homepage = "https://github.com/nai-tools/novelai_api"
+repository = "https://github.com/nai-tools/novelai_api"
+documentation = "https://docs.rs/novelai_api/"
+license = "GPL-2.0"
+edition = "2021"
+
+[dependencies]
+serde = "^1.0"
+serde_derive = "^1.0"
+serde_json = "^1.0"
+lazy_static = "1.4.0"
+url = "2.5.0"
+bytes = "1.6.0"
+thiserror = "1.0.58"
+regex = "1.10.4"
+textwrap = "0.16.1"
+
+[dependencies.reqwest]
+version = "^0.11"
+features = ["json", "multipart"]
