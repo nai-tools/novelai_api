@@ -99,16 +99,3 @@ pub fn process_string_for_voice_generation(string: impl AsRef<str>) -> Vec<Strin
 
     reduced_split_text
 }
-
-pub fn contains_only_non_mergable_elements(str_array: Vec<&str>) -> bool {
-    if str_array.len() < 2 {
-        return true;
-    }
-
-    for i in 0..str_array.len() - 1 {
-        if str_array[i].len() + str_array[i + 1].len() < TTS_MAX_INPUT_LENGTH {
-            return false;
-        }
-    }
-    true
-}
