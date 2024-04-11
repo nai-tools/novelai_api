@@ -1,4 +1,5 @@
 use bytes::Bytes;
+use regex::Regex;
 use reqwest::RequestBuilder;
 use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
@@ -61,6 +62,25 @@ pub struct AiGenerateTextResponse {
     pub output: String,
 }
 
+fn split_keep<'a>(r: &Regex, text: &'a str) -> Vec<&'a str> {
+    let mut result = Vec::new();
+    let mut last = 0;
+    for match_point in r.find_iter(&text) {
+        dbg!(match_point);
+        if last != match_point.end() {
+            println!("sus");
+            result.push(&text[last..match_point.end()]);
+        }
+        result.push(match_point.as_str());
+        last = match_point.end() + match_point.as_str().len();
+        println!("{:?}", result);
+    }
+    if last < text.len() {
+        result.push(&text[last..]);
+    }
+    result
+}
+
 const TTS_MAX_INPUT_LENGTH: usize = 1000;
 /// Split text first by ",", "\n", ". ", ".\n"
 /// Then as backup use wordwrap
@@ -74,7 +94,7 @@ pub fn process_string_for_voice_generation(string: impl AsRef<str>) -> Vec<Strin
     let natural_speach_stop_spliter =
         regex::Regex::new(r#"(?m),|\. |\."|,"|\? |\?"|! |!"|\n\n|\n"#).unwrap();
 
-    let natural_split_text: Vec<&str> = natural_speach_stop_spliter.split(&input_str).collect();
+    let natural_split_text: Vec<&str> = split_keep(&natural_speach_stop_spliter, &input_str);
     let mut split_text: Vec<String> = vec![];
 
     for element in natural_split_text {
