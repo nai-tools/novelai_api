@@ -1,4 +1,4 @@
-# novelai_api
+# NovelAI API
 Rust API client for novelai_api
 
 ## Overview
