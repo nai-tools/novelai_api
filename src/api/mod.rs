@@ -62,27 +62,29 @@ pub struct AiGenerateTextResponse {
     pub output: String,
 }
 
+// Split using regex but keep the delimiters
 fn split_keep<'a>(r: &Regex, text: &'a str) -> Vec<&'a str> {
     let mut result = Vec::new();
-    let mut last = 0;
-    for match_point in r.find_iter(&text) {
-        dbg!(match_point);
-        if last != match_point.end() {
-            println!("sus");
-            result.push(&text[last..match_point.end()]);
+    let mut last_end = 0;
+
+    for match_point in r.find_iter(text) {
+        if match_point.start() != last_end {
+            result.push(&text[last_end..match_point.start()]);
         }
         result.push(match_point.as_str());
-        last = match_point.end() + match_point.as_str().len();
-        println!("{:?}", result);
+        last_end = match_point.end();
     }
-    if last < text.len() {
-        result.push(&text[last..]);
+
+    if last_end != text.len() {
+        result.push(&text[last_end..]);
     }
+
     result
 }
 
 const TTS_MAX_INPUT_LENGTH: usize = 1000;
-/// Split text first by ",", "\n", ". ", ".\n"
+/// Split text first by
+/// , | \. | \." | ," | \?  | \?" | !  | !" | \n\n | \n | \.\.\.
 /// Then as backup use wordwrap
 pub fn process_string_for_voice_generation(string: impl AsRef<str>) -> Vec<String> {
     // Max length is 1000 so return if under that
@@ -92,7 +94,7 @@ pub fn process_string_for_voice_generation(string: impl AsRef<str>) -> Vec<Strin
 
     let input_str = string.as_ref().to_owned();
     let natural_speach_stop_spliter =
-        regex::Regex::new(r#"(?m),|\. |\."|,"|\? |\?"|! |!"|\n\n|\n"#).unwrap();
+        regex::Regex::new(r#",|\. |\."|,"|\? |\?"|! |!"|\n\n|\n|\.\.\.|…"#).unwrap();
 
     let natural_split_text: Vec<&str> = split_keep(&natural_speach_stop_spliter, &input_str);
     let mut split_text: Vec<String> = vec![];
