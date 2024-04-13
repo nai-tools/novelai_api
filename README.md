@@ -17,6 +17,11 @@ Add the following to `Cargo.toml` under `[dependencies]`:
 ```
 novelai_api = "0.2.0"
 ```
+or by running
+```bash
+cargo add novelai_api
+```
+
 
 ## Documentation
 Documentation can be found at:
@@ -27,6 +32,8 @@ Documentation can be found at:
 
 ### Generating Text
 ```rust
+use novelai_api::{api::ai_generate_text, model::*};
+
 #[tokio::main]
 async fn main() {
     let mut conf = Configuration::new();
