@@ -10,7 +10,7 @@ This API client provides you access to the NovelAI API, the following endpoints 
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```
-novelai_api = "0.2.0"
+novelai_api = "0.2"
 ```
 or by running
 ```bash
