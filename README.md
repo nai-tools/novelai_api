@@ -4,11 +4,6 @@ Rust API client for NovelAI API
 ## Overview
 
 This API client provides you access to the NovelAI API, the following endpoints have been implemented:
-- [X] /ai/generate
-- [X] /ai/generate-voice
-- [ ] /ai/generate-image
-- [ ] /user/objects
-
 - Current Novel AI API version: 1.0
 
 ## Installation
