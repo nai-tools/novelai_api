@@ -1,6 +1,6 @@
 [package]
 name = "novelai_api"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Allstreamer"]
 description = "A Rust based interface for working with the NovelAI API"
 readme = "README.md"
