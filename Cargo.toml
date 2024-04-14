@@ -1,6 +1,6 @@
 [package]
 name = "novelai_api"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Allstreamer"]
 description = "A Rust based interface for working with the NovelAI API"
 readme = "README.md"
@@ -25,4 +25,5 @@ textwrap = "0.16.1"
 
 [dependencies.reqwest]
 version = "^0.11"
-features = ["json", "multipart"]
+default-features = false
+features = ["json", "multipart", "rustls-tls"]
